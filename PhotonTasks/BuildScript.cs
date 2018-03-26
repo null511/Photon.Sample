@@ -2,7 +2,7 @@
 
 namespace PhotonTasks
 {
-    class BuildScript : IScript
+    public class BuildScript : IScript
     {
         public ScriptResult Run(ScriptContext context)
         {
@@ -13,20 +13,31 @@ namespace PhotonTasks
             try {
                 agents.Initialize();
 
+                // Unpack Applications
                 agents.RunTasks(
-                    "UnpackPhotonSampleWeb",
-                    "UnpackPhotonSampleService");
+                    nameof(UnpackPhotonSampleWeb),
+                    nameof(UnpackPhotonSampleService));
 
-                agents.RunTask("Stop");
+                // Stop Applications
+                agents.RunTasks(
+                    nameof(ServiceStopTask),
+                    nameof(AppPoolStopTask));
+
+                // Update Applications
+                agents.RunTasks(
+                    nameof(UpdatePhotonSampleWeb),
+                    nameof(UpdatePhotonSampleService));
+
+                // Start Applications
+                agents.RunTasks(
+                    nameof(ServiceStartTask),
+                    nameof(AppPoolStartTask));
             }
             finally {
                 agents.Release();
             }
 
-            return new ScriptResult {
-                Successful = true,
-                Message = "Ok",
-            };
+            return ScriptResult.Ok();
         }
     }
 }

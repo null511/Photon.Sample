@@ -1,22 +1,19 @@
 ﻿using Photon.Framework;
-using Photon.Framework.Packages;
 using Photon.Framework.Tasks;
+using System;
 
 namespace PhotonTasks
 {
     [Roles(Roles.Deploy.Web)]
-    class UnpackPhotonSampleWeb : ITask
+    class UpdatePhotonSampleWeb : ITask
     {
         public TaskResult Run(TaskContext context)
         {
-            // Download package to working directory
-            var packageFilename = context.DownloadPackage("photon.sample.web", context.ReleaseVersion, context.WorkDirectory);
-
             // Get the versioned application path
             var applicationPath = context.GetApplicationDirectory(Apps.Web, context.ReleaseVersion);
 
-            // Unpackage contents to application path
-            PackageTools.Unpackage(packageFilename, applicationPath);
+            // TODO: Update IIS Application path
+            throw new NotImplementedException();
 
             return TaskResult.Ok();
         }

@@ -43,8 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apps.cs" />
     <Compile Include="BuildScript.cs" />
+    <Compile Include="Tasks\AppPoolStartTask.cs" />
+    <Compile Include="Tasks\AppPoolStopTask.cs" />
+    <Compile Include="Tasks\ServiceStartTask.cs" />
+    <Compile Include="Tasks\ServiceStopTask.cs" />
     <Compile Include="Tasks\UnpackPhotonSampleService.cs" />
+    <Compile Include="Tasks\UpdatePhotonSampleService.cs" />
+    <Compile Include="Tasks\UpdatePhotonSampleWeb.cs" />
     <Compile Include="Tasks\UnpackPhotonSampleWeb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Roles.cs" />
