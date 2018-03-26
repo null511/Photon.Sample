@@ -1,7 +1,7 @@
 ﻿using Microsoft.Web.Administration;
 using Photon.Framework;
 using Photon.Framework.Tasks;
-using Photon.IIS;
+using Photon.Plugins.IIS;
 
 namespace PhotonTasks
 {
