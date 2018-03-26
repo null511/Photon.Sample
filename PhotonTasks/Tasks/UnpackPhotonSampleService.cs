@@ -4,7 +4,7 @@ using Photon.Framework.Tasks;
 
 namespace PhotonTasks
 {
-    [Roles(Roles.Deploy.Service)]
+    [Roles(Configuration.Roles.Deploy.Service)]
     class UnpackPhotonSampleService : ITask
     {
         public TaskResult Run(TaskContext context)
@@ -13,7 +13,7 @@ namespace PhotonTasks
             var packageFilename = context.DownloadPackage("photon.sample.svc", context.ReleaseVersion, context.WorkDirectory);
 
             // Get the versioned application path
-            var applicationPath = context.GetApplicationDirectory(Apps.Service, context.ReleaseVersion);
+            var applicationPath = context.GetApplicationDirectory(Configuration.Apps.Service, context.ReleaseVersion);
 
             // Unpackage contents to application path
             PackageTools.Unpackage(packageFilename, applicationPath);

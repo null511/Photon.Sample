@@ -30,8 +30,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Photon\Plugins\Photon.IIS\bin\Debug\Microsoft.Web.Administration.dll</HintPath>
+    </Reference>
     <Reference Include="Photon.Framework">
       <HintPath>..\..\Photon\Plugins\Photon.Framework\bin\Debug\Photon.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Photon.IIS">
+      <HintPath>..\..\Photon\Plugins\Photon.IIS\bin\Debug\Photon.IIS.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -43,8 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Apps.cs" />
     <Compile Include="BuildScript.cs" />
+    <Compile Include="Configuration.cs" />
     <Compile Include="Tasks\AppPoolStartTask.cs" />
     <Compile Include="Tasks\AppPoolStopTask.cs" />
     <Compile Include="Tasks\ServiceStartTask.cs" />
@@ -54,7 +61,6 @@
     <Compile Include="Tasks\UpdatePhotonSampleWeb.cs" />
     <Compile Include="Tasks\UnpackPhotonSampleWeb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Roles.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,16 +1,23 @@
-﻿using Photon.Framework;
+﻿using Microsoft.Web.Administration;
+using Photon.Framework;
 using Photon.Framework.Tasks;
-using System;
+using Photon.IIS;
 
 namespace PhotonTasks
 {
-    [Roles(Roles.Deploy.Web)]
+    [Roles(Configuration.Roles.Deploy.Web)]
     class AppPoolStopTask : ITask
     {
         public TaskResult Run(TaskContext context)
         {
-            // TODO: Stop AppPool
-            throw new NotImplementedException();
+            using (var iis = new IISTools()) {
+                iis.ConfigureAppPool(Configuration.AppPoolName, appPool => {
+                    appPool.Stop();
+
+                    appPool.AutoStart = true;
+                    appPool.ManagedPipelineMode = ManagedPipelineMode.Integrated;
+                });
+            }
 
             return TaskResult.Ok();
         }

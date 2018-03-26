@@ -4,7 +4,7 @@ using Photon.Framework.Tasks;
 
 namespace PhotonTasks
 {
-    [Roles(Roles.Deploy.Web)]
+    [Roles(Configuration.Roles.Deploy.Web)]
     class UnpackPhotonSampleWeb : ITask
     {
         public TaskResult Run(TaskContext context)
@@ -13,7 +13,7 @@ namespace PhotonTasks
             var packageFilename = context.DownloadPackage("photon.sample.web", context.ReleaseVersion, context.WorkDirectory);
 
             // Get the versioned application path
-            var applicationPath = context.GetApplicationDirectory(Apps.Web, context.ReleaseVersion);
+            var applicationPath = context.GetApplicationDirectory(Configuration.Apps.Web, context.ReleaseVersion);
 
             // Unpackage contents to application path
             PackageTools.Unpackage(packageFilename, applicationPath);

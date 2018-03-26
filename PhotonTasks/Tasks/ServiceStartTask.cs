@@ -4,7 +4,7 @@ using System;
 
 namespace PhotonTasks
 {
-    [Roles(Roles.Deploy.Service)]
+    [Roles(Configuration.Roles.Deploy.Service)]
     class ServiceStartTask : ITask
     {
         public TaskResult Run(TaskContext context)

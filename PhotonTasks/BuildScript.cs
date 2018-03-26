@@ -7,8 +7,8 @@ namespace PhotonTasks
         public ScriptResult Run(ScriptContext context)
         {
             var agents = context.RegisterAgents(
-                Roles.Deploy.Web,
-                Roles.Deploy.Service);
+                Configuration.Roles.Deploy.Web,
+                Configuration.Roles.Deploy.Service);
 
             try {
                 agents.Initialize();
