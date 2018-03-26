@@ -1,0 +1,28 @@
+{
+	"http": {
+		"host": "localhost",
+		"port": 80,
+		"path": "/photon"
+	},
+	"agents": [
+		{
+			"name": "Build",
+			"address": "http://localhost/photon_build",
+			"roles": [
+				"build"
+			]
+		},{
+			"name": "Deploy [1]",
+			"address": "http://localhost/photon_deploy1",
+			"roles": [
+				"deploy_1"
+			]
+		},{
+			"name": "Deploy [2]",
+			"address": "http://localhost/photon_deploy2",
+			"roles": [
+				"deploy_2"
+			]
+		}
+	]
+}

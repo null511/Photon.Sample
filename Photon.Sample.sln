@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication", "WebApplication\WebApplication.csproj", "{BE9F1DB8-EB4A-4F4D-9CE1-CBDCDAA92021}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsService", "WindowsService\WindowsService.csproj", "{62A539CA-0401-423D-B952-E7EBA1BC2BF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotonTasks", "PhotonTasks\PhotonTasks.csproj", "{DDD03C88-2F25-4326-8BC1-10A507AAA046}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{BE9F1DB8-EB4A-4F4D-9CE1-CBDCDAA92021}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE9F1DB8-EB4A-4F4D-9CE1-CBDCDAA92021}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE9F1DB8-EB4A-4F4D-9CE1-CBDCDAA92021}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62A539CA-0401-423D-B952-E7EBA1BC2BF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62A539CA-0401-423D-B952-E7EBA1BC2BF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62A539CA-0401-423D-B952-E7EBA1BC2BF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62A539CA-0401-423D-B952-E7EBA1BC2BF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDD03C88-2F25-4326-8BC1-10A507AAA046}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDD03C88-2F25-4326-8BC1-10A507AAA046}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDD03C88-2F25-4326-8BC1-10A507AAA046}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDD03C88-2F25-4326-8BC1-10A507AAA046}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

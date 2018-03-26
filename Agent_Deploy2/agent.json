@@ -1,0 +1,7 @@
+{
+	"http": {
+		"host": "localhost",
+		"port": 80,
+		"path": "/photon_deploy2"
+	},
+}
