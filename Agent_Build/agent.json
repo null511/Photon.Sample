@@ -1,8 +1,0 @@
-{
-	"name": "Photon Build Agent",
-	"http": {
-		"host": "localhost",
-		"port": 80,
-		"path": "/photon_build"
-	},
-}
