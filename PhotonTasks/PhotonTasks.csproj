@@ -34,12 +34,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Photon\Plugins\Photon.IIS\bin\Debug\Microsoft.Web.Administration.dll</HintPath>
     </Reference>
-    <Reference Include="Photon.Framework">
-      <HintPath>..\..\Photon\Photon.Framework\bin\Debug\Photon.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Photon.IIS">
-      <HintPath>..\..\Photon\Plugins\Photon.IIS\bin\Debug\Photon.IIS.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -61,6 +55,16 @@
     <Compile Include="Tasks\UpdatePhotonSampleWeb.cs" />
     <Compile Include="Tasks\UnpackPhotonSampleWeb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Photon\Photon.Framework\Photon.Framework.csproj">
+      <Project>{e49360fd-beac-4713-a421-579564fb0992}</Project>
+      <Name>Photon.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Photon\Plugins\Photon.IIS\Photon.IIS.csproj">
+      <Project>{94ab7eb8-e0ca-46b0-a03b-953aa12250af}</Project>
+      <Name>Photon.IIS</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
