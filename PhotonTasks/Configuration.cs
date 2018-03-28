@@ -12,6 +12,8 @@
 
         public static class Roles
         {
+            public const string Build = "build";
+
             public static class Deploy
             {
                 public const string Web = "deploy.web";

@@ -44,6 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DeployScript.cs" />
+    <Compile Include="Tasks\BuildSolutionTask.cs" />
+    <Compile Include="TestScript.cs" />
     <Compile Include="BuildScript.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Tasks\AppPoolStartTask.cs" />

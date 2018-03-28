@@ -1,40 +1,34 @@
 ﻿using Photon.Framework.Scripts;
+using System;
+using System.Threading.Tasks;
 
 namespace PhotonTasks
 {
     public class BuildScript : IScript
     {
-        public ScriptResult Run(ScriptContext context)
+        public async Task<ScriptResult> RunAsync(ScriptContext context)
         {
             var agents = context.RegisterAgents(
-                Configuration.Roles.Deploy.Web,
-                Configuration.Roles.Deploy.Service);
+                Configuration.Roles.Build);
 
             try {
-                agents.Initialize();
+                await agents.InitializeAsync();
 
-                // Unpack Applications
-                agents.RunTasks(
-                    nameof(UnpackPhotonSampleWeb),
-                    nameof(UnpackPhotonSampleService));
+                // Build Solution
+                await agents.RunTasksAsync(
+                    nameof(BuildSolutionTask));
 
-                // Stop Applications
-                agents.RunTasks(
-                    nameof(ServiceStopTask),
-                    nameof(AppPoolStopTask));
+                throw new NotImplementedException();
 
-                // Update Applications
-                agents.RunTasks(
-                    nameof(UpdatePhotonSampleWeb),
-                    nameof(UpdatePhotonSampleService));
+                // TODO: Create Web Package
+                // TODO: Create Service Package
 
-                // Start Applications
-                agents.RunTasks(
-                    nameof(ServiceStartTask),
-                    nameof(AppPoolStartTask));
+                // TODO: Create Release
+                // TODO: Publish Release Package
+                // TODO: Publish Web and Sevice Project Packages
             }
             finally {
-                agents.Release();
+                await agents.ReleaseAllAsync();
             }
 
             return ScriptResult.Ok();

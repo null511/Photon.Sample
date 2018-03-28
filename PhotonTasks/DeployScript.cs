@@ -1,0 +1,44 @@
+﻿using Photon.Framework.Scripts;
+using System.Threading.Tasks;
+
+namespace PhotonTasks
+{
+    public class DeployScript : IScript
+    {
+        public async Task<ScriptResult> RunAsync(ScriptContext context)
+        {
+            var agents = context.RegisterAgents(
+                Configuration.Roles.Deploy.Web,
+                Configuration.Roles.Deploy.Service);
+
+            try {
+                await agents.InitializeAsync();
+
+                // Unpack Applications
+                await agents.RunTasksAsync(
+                    nameof(UnpackPhotonSampleWeb),
+                    nameof(UnpackPhotonSampleService));
+
+                // Stop Applications
+                await agents.RunTasksAsync(
+                    nameof(ServiceStopTask),
+                    nameof(AppPoolStopTask));
+
+                // Update Applications
+                await agents.RunTasksAsync(
+                    nameof(UpdatePhotonSampleWeb),
+                    nameof(UpdatePhotonSampleService));
+
+                // Start Applications
+                await agents.RunTasksAsync(
+                    nameof(ServiceStartTask),
+                    nameof(AppPoolStartTask));
+            }
+            finally {
+                await agents.ReleaseAllAsync();
+            }
+
+            return ScriptResult.Ok();
+        }
+    }
+}
