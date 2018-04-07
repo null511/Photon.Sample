@@ -1,0 +1,16 @@
+{
+	"id": "photon.sample.tasks",
+	"name": "Photon Sample Tasks",
+	"description": "Sample Project Package for Photon deployments.",
+	"assembly": "PhotonTasks.dll",
+	"files": [
+		{
+			"path": "PhotonTasks\\bin\\Debug\\**",
+			"destination": "",
+			"exclude": [
+				"**\\*.xml",
+				"**\\*.pdb"
+			]
+		}
+	]
+}

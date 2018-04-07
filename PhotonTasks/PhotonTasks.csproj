@@ -32,7 +32,15 @@
   <ItemGroup>
     <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Photon\Plugins\Photon.IIS\bin\Debug\Microsoft.Web.Administration.dll</HintPath>
+      <HintPath>Z:\Photon\Plugins\Photon.IIS\bin\Debug\Microsoft.Web.Administration.dll</HintPath>
+    </Reference>
+    <Reference Include="Photon.Framework, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Z:\Photon\Photon.Framework\bin\Debug\Photon.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Photon.IIS, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Z:\Photon\Plugins\Photon.IIS\bin\Debug\Photon.IIS.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,29 +53,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeployScript.cs" />
-    <Compile Include="Tasks\BuildSolutionTask.cs" />
-    <Compile Include="TestScript.cs" />
-    <Compile Include="BuildScript.cs" />
+    <Compile Include="TestTask.cs" />
+    <Compile Include="BuildTask.cs" />
     <Compile Include="Configuration.cs" />
-    <Compile Include="Tasks\AppPoolStartTask.cs" />
-    <Compile Include="Tasks\AppPoolStopTask.cs" />
-    <Compile Include="Tasks\ServiceStartTask.cs" />
-    <Compile Include="Tasks\ServiceStopTask.cs" />
-    <Compile Include="Tasks\UnpackPhotonSampleService.cs" />
-    <Compile Include="Tasks\UpdatePhotonSampleService.cs" />
-    <Compile Include="Tasks\UpdatePhotonSampleWeb.cs" />
-    <Compile Include="Tasks\UnpackPhotonSampleWeb.cs" />
+    <Compile Include="DeployTasks\AppPoolStartTask.cs" />
+    <Compile Include="DeployTasks\AppPoolStopTask.cs" />
+    <Compile Include="DeployTasks\ServiceStartTask.cs" />
+    <Compile Include="DeployTasks\ServiceStopTask.cs" />
+    <Compile Include="DeployTasks\UnpackPhotonSampleService.cs" />
+    <Compile Include="DeployTasks\UpdatePhotonSampleService.cs" />
+    <Compile Include="DeployTasks\UpdatePhotonSampleWeb.cs" />
+    <Compile Include="DeployTasks\UnpackPhotonSampleWeb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Photon\Photon.Framework\Photon.Framework.csproj">
-      <Project>{e49360fd-beac-4713-a421-579564fb0992}</Project>
-      <Name>Photon.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Photon\Plugins\Photon.IIS\Photon.IIS.csproj">
-      <Project>{94ab7eb8-e0ca-46b0-a03b-953aa12250af}</Project>
-      <Name>Photon.IIS</Name>
-    </ProjectReference>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,13 +1,13 @@
-﻿using Photon.Framework;
+﻿using System;
+using System.Threading.Tasks;
 using Photon.Framework.Tasks;
-using System;
 
-namespace PhotonTasks
+namespace PhotonTasks.DeployTasks
 {
     [Roles(Configuration.Roles.Deploy.Service)]
-    class ServiceStopTask : ITask
+    internal class ServiceStopTask : IDeployTask
     {
-        public TaskResult Run(TaskContext context)
+        public async Task<TaskResult> RunAsync(IAgentDeployContext context)
         {
             // TODO: Stop Service
             throw new NotImplementedException();

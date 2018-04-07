@@ -1,18 +1,19 @@
 ﻿using Photon.Framework.Scripts;
 using System.Threading.Tasks;
+using PhotonTasks.DeployTasks;
 
 namespace PhotonTasks
 {
-    public class DeployScript : IScript
+    public class DeployScript : IDeployScript
     {
-        public async Task<ScriptResult> RunAsync(ScriptContext context)
+        public async Task<ScriptResult> RunAsync(IServerDeployContext context)
         {
             var agents = context.RegisterAgents(
                 Configuration.Roles.Deploy.Web,
                 Configuration.Roles.Deploy.Service);
 
             try {
-                await agents.InitializeAsync();
+                await agents.InitializeAsync("", "");
 
                 // Unpack Applications
                 await agents.RunTasksAsync(

@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Photon.Library", "Photon\Ph
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotonAgent", "Photon\Photon.Agent\PhotonAgent.csproj", "{2DA02660-629D-48A9-BC50-A43BCA23D768}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Photon.Communication", "Photon\Photon.Communication\Photon.Communication.csproj", "{E167A349-7691-4406-9F4B-989BD5E6E12F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{2DA02660-629D-48A9-BC50-A43BCA23D768}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DA02660-629D-48A9-BC50-A43BCA23D768}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DA02660-629D-48A9-BC50-A43BCA23D768}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E167A349-7691-4406-9F4B-989BD5E6E12F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E167A349-7691-4406-9F4B-989BD5E6E12F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E167A349-7691-4406-9F4B-989BD5E6E12F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E167A349-7691-4406-9F4B-989BD5E6E12F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +75,7 @@ Global
 		{BFEA3598-75D3-4725-A169-EA48865474CE} = {3C00FED6-70E1-4433-9546-4D02E448639F}
 		{76D31D86-404D-4812-9101-C2F7614F28E7} = {3C00FED6-70E1-4433-9546-4D02E448639F}
 		{2DA02660-629D-48A9-BC50-A43BCA23D768} = {3C00FED6-70E1-4433-9546-4D02E448639F}
+		{E167A349-7691-4406-9F4B-989BD5E6E12F} = {3C00FED6-70E1-4433-9546-4D02E448639F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0E4F5665-2EF9-416D-88D4-807286EDDA4B}
