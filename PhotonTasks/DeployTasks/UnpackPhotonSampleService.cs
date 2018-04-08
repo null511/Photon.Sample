@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using Photon.Framework.Packages;
+﻿using Photon.Framework.Packages;
 using Photon.Framework.Tasks;
+using System.Threading.Tasks;
 
 namespace PhotonTasks.DeployTasks
 {
@@ -16,7 +16,7 @@ namespace PhotonTasks.DeployTasks
             var applicationPath = context.GetApplicationDirectory(Configuration.Apps.Service, context.ProjectPackageVersion);
 
             // Unpackage contents to application path
-            PackageTools.UnpackProject(packageFilename, applicationPath);
+            ApplicationPackageTools.Unpack(packageFilename, applicationPath);
 
             return TaskResult.Ok();
         }

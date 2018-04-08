@@ -5,7 +5,7 @@
 	"assembly": "PhotonTasks.dll",
 	"files": [
 		{
-			"path": "PhotonTasks\\bin\\Debug\\**",
+			"path": "PhotonTasks\\bin\\Release\\**",
 			"destination": "",
 			"exclude": [
 				"**\\*.xml",
