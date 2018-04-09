@@ -1,6 +1,6 @@
 ﻿using Photon.Framework.Scripts;
-using System.Threading.Tasks;
 using PhotonTasks.DeployTasks;
+using System.Threading.Tasks;
 
 namespace PhotonTasks
 {
@@ -13,7 +13,7 @@ namespace PhotonTasks
                 Configuration.Roles.Deploy.Service);
 
             try {
-                await agents.InitializeAsync("", "");
+                await agents.InitializeAsync(context.ProjectPackageId, context.ProjectPackageVersion);
 
                 // Unpack Applications
                 await agents.RunTasksAsync(
