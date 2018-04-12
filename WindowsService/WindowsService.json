@@ -1,0 +1,15 @@
+{
+	"id": "photon.sample.svc",
+	"name": "Photon Sample Service Application",
+	"description": "Sample Application Package for Photon deployments.",
+	"files": [
+		{
+			"path": "bin\\Debug\\**",
+			"destination": "",
+			"exclude": [
+				"**\\*.xml",
+				"**\\*.pdb"
+			]
+		}
+	]
+}

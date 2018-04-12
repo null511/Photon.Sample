@@ -1,4 +1,5 @@
-﻿using Photon.Framework.Tasks;
+﻿using Photon.Framework.Agent;
+using Photon.Framework.Tasks;
 using System;
 using System.Threading.Tasks;
 
@@ -6,22 +7,22 @@ namespace PhotonTasks
 {
     public class TestTask : IBuildTask
     {
-        public async Task<TaskResult> RunAsync(IAgentBuildContext context)
+        public IAgentBuildContext Context {get; set;}
+
+
+        public async Task<TaskResult> RunAsync()
         {
-            context.Output.AppendLine("Hello World!", ConsoleColor.White);
+            Context.Output.AppendLine("Hello World!", ConsoleColor.White);
 
             await Task.Delay(2_000);
-            context.Output.AppendLine("3...", ConsoleColor.DarkRed);
+            Context.Output.AppendLine("3...", ConsoleColor.DarkRed);
             await Task.Delay(1_000);
-            context.Output.AppendLine("2...", ConsoleColor.DarkGreen);
+            Context.Output.AppendLine("2...", ConsoleColor.DarkGreen);
             await Task.Delay(1_000);
-            context.Output.AppendLine("1...", ConsoleColor.DarkBlue);
+            Context.Output.AppendLine("1...", ConsoleColor.DarkBlue);
             await Task.Delay(1_000);
 
-            context.Output.AppendLine("Complete!", ConsoleColor.Green);
-
-            //var testFileName = Path.Combine(context.WorkDirectory, "test.txt");
-            //File.WriteAllText(testFileName, "Hello World! This message will self destruct in 10 seconds...");
+            Context.Output.AppendLine("Complete!", ConsoleColor.Green);
 
             return TaskResult.Ok("Alright Alright Alright");
         }

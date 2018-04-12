@@ -1,0 +1,15 @@
+{
+	"id": "photon.sample.web",
+	"name": "Photon Sample Web Application",
+	"description": "Sample Application Package for Photon deployments.",
+	"files": [
+		{
+			"path": "Publish\\**",
+			"destination": "",
+			"exclude": [
+				"**\\*.xml",
+				"**\\*.pdb"
+			]
+		}
+	]
+}

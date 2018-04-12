@@ -1,4 +1,4 @@
-﻿using Photon.Framework.Scripts;
+﻿using Photon.Framework.Server;
 using PhotonTasks.DeployTasks;
 using System.Threading.Tasks;
 
@@ -8,12 +8,12 @@ namespace PhotonTasks
     {
         public async Task<ScriptResult> RunAsync(IServerDeployContext context)
         {
-            var agents = context.RegisterAgents(
+            var agents = context.RegisterAllAgents(
                 Configuration.Roles.Deploy.Web,
                 Configuration.Roles.Deploy.Service);
 
             try {
-                await agents.InitializeAsync(context.ProjectPackageId, context.ProjectPackageVersion);
+                await agents.InitializeAsync();
 
                 // Unpack Applications
                 await agents.RunTasksAsync(
@@ -21,9 +21,9 @@ namespace PhotonTasks
                     nameof(UnpackPhotonSampleService));
 
                 // Stop Applications
-                await agents.RunTasksAsync(
-                    nameof(ServiceStopTask),
-                    nameof(AppPoolStopTask));
+                //await agents.RunTasksAsync(
+                //    nameof(ServiceStopTask),
+                //    nameof(AppPoolStopTask));
 
                 // Update Applications
                 await agents.RunTasksAsync(
@@ -31,9 +31,9 @@ namespace PhotonTasks
                     nameof(UpdatePhotonSampleService));
 
                 // Start Applications
-                await agents.RunTasksAsync(
-                    nameof(ServiceStartTask),
-                    nameof(AppPoolStartTask));
+                //await agents.RunTasksAsync(
+                //    nameof(ServiceStartTask),
+                //    nameof(AppPoolStartTask));
             }
             finally {
                 await agents.ReleaseAllAsync();

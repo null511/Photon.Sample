@@ -1,22 +1,21 @@
-﻿using System.Threading.Tasks;
-using Microsoft.Web.Administration;
+﻿using Photon.Framework.Agent;
 using Photon.Framework.Tasks;
 using Photon.Plugins.IIS;
+using System;
+using System.Threading.Tasks;
 
 namespace PhotonTasks.DeployTasks
 {
     [Roles(Configuration.Roles.Deploy.Web)]
     internal class AppPoolStopTask : IDeployTask
     {
-        public async Task<TaskResult> RunAsync(IAgentDeployContext context)
-        {
-            using (var iis = new IISTools()) {
-                iis.ConfigureAppPool(Configuration.AppPoolName, appPool => {
-                    appPool.Stop();
+        public IAgentDeployContext Context {get; set;}
 
-                    appPool.AutoStart = true;
-                    appPool.ManagedPipelineMode = ManagedPipelineMode.Integrated;
-                });
+
+        public async Task<TaskResult> RunAsync()
+        {
+            using (var iis = new IISTools(Context)) {
+                await iis.ApplicationPool.StopAsync(Configuration.AppPoolName, TimeSpan.FromMinutes(1));
             }
 
             return TaskResult.Ok();

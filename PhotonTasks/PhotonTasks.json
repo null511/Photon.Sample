@@ -6,7 +6,7 @@
 	"script": "DeployScript",
 	"files": [
 		{
-			"path": "bin\\Release\\**",
+			"path": "bin\\Debug\\**",
 			"destination": "",
 			"exclude": [
 				"**\\*.xml",

@@ -1,18 +1,21 @@
-﻿using System.Threading.Tasks;
+﻿using Photon.Framework.Agent;
 using Photon.Framework.Tasks;
 using Photon.Plugins.IIS;
+using System;
+using System.Threading.Tasks;
 
 namespace PhotonTasks.DeployTasks
 {
     [Roles(Configuration.Roles.Deploy.Web)]
     internal class AppPoolStartTask : IDeployTask
     {
-        public async Task<TaskResult> RunAsync(IAgentDeployContext context)
+        public IAgentDeployContext Context {get; set;}
+
+
+        public async Task<TaskResult> RunAsync()
         {
-            using (var iis = new IISTools()) {
-                iis.ConfigureAppPool(Configuration.AppPoolName, appPool => {
-                    appPool.Start();
-                });
+            using (var iis = new IISTools(Context)) {
+                await iis.ApplicationPool.StartAsync(Configuration.AppPoolName, TimeSpan.FromMinutes(1));
             }
 
             return TaskResult.Ok();

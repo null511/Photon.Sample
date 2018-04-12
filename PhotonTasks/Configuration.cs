@@ -2,12 +2,21 @@
 {
     internal static class Configuration
     {
-        public const string AppPoolName = "DefaultAppPool";
+        public const string AppPoolName = "Photon.Sample.Pool";
 
         public static class Apps
         {
-            public const string Web = "Photon.Sample.Web";
-            public const string Service = "Photon.Sample.Service";
+            public static class Web
+            {
+                public const string PackageId = "photon.sample.web";
+                public const string AppName = "Photon.Sample.Web";
+            }
+
+            public static class Service
+            {
+                public const string PackageId = "photon.sample.svc";
+                public const string AppName = "Photon.Sample.Service";
+            }
         }
 
         public static class Roles

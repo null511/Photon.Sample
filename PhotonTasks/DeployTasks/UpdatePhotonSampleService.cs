@@ -1,18 +1,21 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Photon.Framework.Agent;
 using Photon.Framework.Tasks;
+using System;
+using System.Threading.Tasks;
 
 namespace PhotonTasks.DeployTasks
 {
     [Roles(Configuration.Roles.Deploy.Web)]
     internal class UpdatePhotonSampleService : IDeployTask
     {
-        public async Task<TaskResult> RunAsync(IAgentDeployContext context)
+        public IAgentDeployContext Context {get; set;}
+
+
+        public async Task<TaskResult> RunAsync()
         {
             // Get the versioned application path
-            var applicationPath = context.GetApplicationDirectory(Configuration.Apps.Service, context.ProjectPackageVersion);
+            var applicationPath = Context.GetApplicationDirectory(Configuration.Apps.Service.AppName, Context.ProjectPackageVersion);
 
-            // TODO: Update IIS Application path
             throw new NotImplementedException();
 
             return TaskResult.Ok();
