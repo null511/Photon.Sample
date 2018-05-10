@@ -2,6 +2,7 @@
 using Photon.Framework.Agent;
 using Photon.Framework.Tasks;
 using Photon.Plugins.IIS;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PhotonTasks.DeployTasks
@@ -12,7 +13,7 @@ namespace PhotonTasks.DeployTasks
         public IAgentDeployContext Context {get; set;}
 
 
-        public async Task<TaskResult> RunAsync()
+        public async Task RunAsync(CancellationToken token)
         {
             // Get the versioned application path
             var applicationPath = Context.GetApplicationDirectory(Configuration.Apps.Web.AppName, Context.ProjectPackageVersion);
@@ -48,8 +49,6 @@ namespace PhotonTasks.DeployTasks
                         site.Start();
                 });
             }
-
-            return TaskResult.Ok();
         }
     }
 }

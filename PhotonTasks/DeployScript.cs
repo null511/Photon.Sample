@@ -6,9 +6,9 @@ namespace PhotonTasks
 {
     public class DeployScript : IDeployScript
     {
-        public async Task<ScriptResult> RunAsync(IServerDeployContext context)
+        public async Task RunAsync(IServerDeployContext context)
         {
-            var agents = context.RegisterAllAgents(
+            var agents = context.RegisterAgents.All(
                 Configuration.Roles.Deploy.Web,
                 Configuration.Roles.Deploy.Service);
 
@@ -38,8 +38,6 @@ namespace PhotonTasks
             finally {
                 await agents.ReleaseAllAsync();
             }
-
-            return ScriptResult.Ok();
         }
     }
 }

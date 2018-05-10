@@ -2,6 +2,7 @@
 using Photon.Framework.Packages;
 using Photon.Framework.Tasks;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PhotonTasks.DeployTasks
@@ -12,20 +13,25 @@ namespace PhotonTasks.DeployTasks
         public IAgentDeployContext Context {get; set;}
 
 
-        public async Task<TaskResult> RunAsync()
+        public async Task RunAsync(CancellationToken token)
         {
-            // Download package to working directory
-            var packageFilename = Path.Combine(Context.ContentDirectory, "photon.sample.svc.zip");
-
-            await Context.PullApplicationPackageAsync(Configuration.Apps.Service.PackageId, Context.ProjectPackageVersion, packageFilename);
-
             // Get the versioned application path
             var applicationPath = Context.GetApplicationDirectory(Configuration.Apps.Service.AppName, Context.ProjectPackageVersion);
 
-            // Unpackage contents to application path
-            await ApplicationPackageTools.UnpackAsync(packageFilename, applicationPath);
+            string packageFilename = null;
+            try {
+                // Download Package to temp file
+                packageFilename = await Context.PullApplicationPackageAsync(Configuration.Apps.Service.PackageId, Context.ProjectPackageVersion);
 
-            return TaskResult.Ok();
+                // Unpackage contents to application path
+                await ApplicationPackageTools.UnpackAsync(packageFilename, applicationPath);
+            }
+            finally {
+                if (packageFilename != null) {
+                    try {File.Delete(packageFilename);}
+                    catch {}
+                }
+            }
         }
     }
 }

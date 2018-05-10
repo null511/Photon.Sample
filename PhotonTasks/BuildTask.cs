@@ -4,6 +4,7 @@ using Photon.Framework.Packages;
 using Photon.Framework.Tasks;
 using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PhotonTasks
@@ -15,7 +16,7 @@ namespace PhotonTasks
         public IAgentBuildContext Context {get; set;}
 
 
-        public async Task<TaskResult> RunAsync()
+        public async Task RunAsync(CancellationToken token)
         {
             Context.Output.AppendLine("Building Solution...", ConsoleColor.White);
 
@@ -40,8 +41,6 @@ namespace PhotonTasks
             Context.Output
                 .Append("Build Number: ", ConsoleColor.DarkBlue)
                 .AppendLine(Context.BuildNumber, ConsoleColor.Blue);
-
-            return TaskResult.Ok();
         }
 
         private async Task CreateProjectPackage()

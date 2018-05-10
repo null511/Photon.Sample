@@ -1,7 +1,7 @@
 {
 	"project": "photon.sample",
 	"assembly": "PhotonTasks\\bin\\Debug\\PhotonTasks.dll",
-    "preBuild": "bin\\msbuild.cmd \"PhotonTasks\\PhotonTasks.csproj\" /t:Rebuild /p:Configuration=Debug /p:Platform=\"Any CPU\" /p:OutputPath=\"bin\\Debug\" /v:m",
+    "preBuild": ".\\bin\\prebuild.cmd",
 	"refspec": "master",
 	"task": "BuildTask",
 	"roles": [
