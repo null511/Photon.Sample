@@ -1,19 +1,23 @@
 ﻿using Photon.Framework.Server;
 using PhotonTasks.DeployTasks;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PhotonTasks
 {
     public class DeployScript : IDeployScript
     {
-        public async Task RunAsync(IServerDeployContext context)
+        public IServerDeployContext Context {get; set;}
+
+
+        public async Task RunAsync(CancellationToken token)
         {
-            var agents = context.RegisterAgents.All(
+            var agents = Context.RegisterAgents.All(
                 Configuration.Roles.Deploy.Web,
                 Configuration.Roles.Deploy.Service);
 
             try {
-                await agents.InitializeAsync();
+                await agents.InitializeAsync(token);
 
                 // Unpack Applications
                 await agents.RunTasksAsync(
@@ -36,7 +40,7 @@ namespace PhotonTasks
                 //    nameof(AppPoolStartTask));
             }
             finally {
-                await agents.ReleaseAllAsync();
+                await agents.ReleaseAllAsync(token);
             }
         }
     }

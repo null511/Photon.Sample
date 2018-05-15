@@ -20,7 +20,7 @@ namespace PhotonTasks
         {
             Context.Output.AppendLine("Building Solution...", ConsoleColor.White);
 
-            Context.RunCommandLine("bin\\msbuild.cmd", "/m", "/v:m",
+            Context.RunCommandLine(".\\bin\\msbuild.cmd", "/m", "/v:m",
                 "\"Photon.Sample.sln\"",
                 "/t:Rebuild",
                 "/p:Configuration=\"Debug\"",
@@ -34,16 +34,16 @@ namespace PhotonTasks
             packageVersion = Context.BuildNumber.ToString();
 
             await Task.WhenAll(
-                CreateProjectPackage(),
-                CreateWebApplicationPackage(),
-                CreateServiceApplicationPackage());
+                CreateProjectPackage(token),
+                CreateWebApplicationPackage(token),
+                CreateServiceApplicationPackage(token));
 
             Context.Output
                 .Append("Build Number: ", ConsoleColor.DarkBlue)
                 .AppendLine(Context.BuildNumber, ConsoleColor.Blue);
         }
 
-        private async Task CreateProjectPackage()
+        private async Task CreateProjectPackage(CancellationToken token)
         {
             Context.Output.AppendLine("Creating Project Package...", ConsoleColor.White);
 
@@ -52,7 +52,7 @@ namespace PhotonTasks
                 var projectPackageFilename = Path.Combine(Context.BinDirectory, $"photon.sample.tasks.{packageVersion}.zip");
 
                 await ProjectPackageTools.CreatePackage(packageDefinition, packageVersion, projectPackageFilename);
-                await Context.PushProjectPackageAsync(projectPackageFilename);
+                await Context.PushProjectPackageAsync(projectPackageFilename, token);
 
                 Context.Output.AppendLine("Created Project Package successfully.", ConsoleColor.DarkGreen);
             }
@@ -62,7 +62,7 @@ namespace PhotonTasks
             }
         }
 
-        private async Task CreateWebApplicationPackage()
+        private async Task CreateWebApplicationPackage(CancellationToken token)
         {
             Context.Output.AppendLine("Creating Web Application Package...", ConsoleColor.White);
 
@@ -73,7 +73,7 @@ namespace PhotonTasks
                 var webAppPackageFilename = Path.Combine(Context.BinDirectory, $"photon.sample.web.{packageVersion}.zip");
 
                 await ApplicationPackageTools.CreatePackage(packageDefinition, packageVersion, webAppPackageFilename);
-                await Context.PushApplicationPackageAsync(webAppPackageFilename);
+                await Context.PushApplicationPackageAsync(webAppPackageFilename, token);
 
                 Context.Output.AppendLine("Created Web Application Package successfully.", ConsoleColor.DarkGreen);
             }
@@ -83,7 +83,7 @@ namespace PhotonTasks
             }
         }
 
-        private async Task CreateServiceApplicationPackage()
+        private async Task CreateServiceApplicationPackage(CancellationToken token)
         {
             Context.Output.AppendLine("Creating Service Application Package...", ConsoleColor.White);
 
@@ -92,7 +92,7 @@ namespace PhotonTasks
                 var svcAppPackageFilename = Path.Combine(Context.BinDirectory, $"photon.sample.svc.{packageVersion}.zip");
 
                 await ApplicationPackageTools.CreatePackage(packageDefinition, packageVersion, svcAppPackageFilename);
-                await Context.PushApplicationPackageAsync(svcAppPackageFilename);
+                await Context.PushApplicationPackageAsync(svcAppPackageFilename, token);
 
                 Context.Output.AppendLine("Created Service Application Package successfully.", ConsoleColor.DarkGreen);
             }
