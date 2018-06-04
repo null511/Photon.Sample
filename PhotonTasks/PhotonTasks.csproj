@@ -31,28 +31,27 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Z:\Photon\Plugins\Photon.IIS\bin\Debug\Microsoft.Web.Administration.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Web.Administration.7.0.0.0\lib\net20\Microsoft.Web.Administration.dll</HintPath>
     </Reference>
-    <Reference Include="Photon.Framework, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Z:\Photon\Photon.Framework\bin\Debug\Photon.Framework.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Photon.IIS, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Z:\Photon\Plugins\Photon.IIS\bin\Debug\Photon.IIS.dll</HintPath>
+    <Reference Include="Photon.Framework, Version=0.0.38.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Photon.Framework.0.0.38\lib\net46\Photon.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Photon.WindowsServices">
-      <HintPath>Z:\Photon\Plugins\Photon.WindowsServices\bin\Debug\Photon.WindowsServices.dll</HintPath>
+    <Reference Include="Photon.IIS, Version=0.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Photon.IIS.0.0.4\lib\net46\Photon.IIS.dll</HintPath>
+    </Reference>
+    <Reference Include="Photon.WindowsServices, Version=0.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Photon.WindowsServices.0.0.5\lib\net46\Photon.WindowsServices.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeployScript.cs" />
-    <Compile Include="TestTask.cs" />
-    <Compile Include="BuildTask.cs" />
-    <Compile Include="Configuration.cs" />
+    <Compile Include="Deploy.cs" />
+    <Compile Include="Package.cs" />
+    <Compile Include="Internal\Configuration.cs" />
     <Compile Include="DeployTasks\UnpackPhotonSampleService.cs" />
     <Compile Include="DeployTasks\UpdatePhotonSampleService.cs" />
     <Compile Include="DeployTasks\UpdatePhotonSampleWeb.cs" />
@@ -61,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

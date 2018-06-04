@@ -4,6 +4,7 @@ using Photon.Framework.Tasks;
 using Photon.Plugins.IIS;
 using System.Threading;
 using System.Threading.Tasks;
+using Configuration = PhotonTasks.Internal.Configuration;
 
 namespace PhotonTasks.DeployTasks
 {

@@ -1,11 +1,12 @@
 ﻿using Photon.Framework.Server;
 using PhotonTasks.DeployTasks;
+using PhotonTasks.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace PhotonTasks
 {
-    public class DeployScript : IDeployScript
+    public class Deploy : IDeployScript
     {
         public IServerDeployContext Context {get; set;}
 
@@ -24,20 +25,10 @@ namespace PhotonTasks
                     nameof(UnpackPhotonSampleWeb),
                     nameof(UnpackPhotonSampleService));
 
-                // Stop Applications
-                //await agents.RunTasksAsync(
-                //    nameof(ServiceStopTask),
-                //    nameof(AppPoolStopTask));
-
                 // Update Applications
                 await agents.RunTasksAsync(
                     nameof(UpdatePhotonSampleWeb),
                     nameof(UpdatePhotonSampleService));
-
-                // Start Applications
-                //await agents.RunTasksAsync(
-                //    nameof(ServiceStartTask),
-                //    nameof(AppPoolStartTask));
             }
             finally {
                 await agents.ReleaseAllAsync(token);

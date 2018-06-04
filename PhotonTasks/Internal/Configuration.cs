@@ -1,4 +1,4 @@
-﻿namespace PhotonTasks
+﻿namespace PhotonTasks.Internal
 {
     internal static class Configuration
     {

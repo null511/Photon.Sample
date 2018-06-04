@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PhotonTasks
 {
-    public class BuildTask : IBuildTask
+    public class Package : IBuildTask
     {
         private string packageVersion;
         private ApplicationPackageUtility appPackages;
@@ -20,7 +20,7 @@ namespace PhotonTasks
 
         public async Task RunAsync(CancellationToken token)
         {
-            Context.Output.AppendLine("Building Solution...", ConsoleColor.White);
+            Context.Output.WriteLine("Building Solution...", ConsoleColor.White);
 
             Context.RunCommandLine(".\\bin\\msbuild.cmd", "/m", "/v:m",
                 "\"Photon.Sample.sln\"",
@@ -46,13 +46,13 @@ namespace PhotonTasks
                 CreateServiceApplicationPackage(token));
 
             Context.Output
-                .Append("Build Number: ", ConsoleColor.DarkBlue)
-                .AppendLine(Context.BuildNumber, ConsoleColor.Blue);
+                .Write("Build Number: ", ConsoleColor.DarkBlue)
+                .WriteLine(Context.BuildNumber, ConsoleColor.Blue);
         }
 
         private async Task CreateProjectPackage(CancellationToken token)
         {
-            Context.Output.AppendLine("Creating Project Package...", ConsoleColor.White);
+            Context.Output.WriteLine("Creating Project Package...", ConsoleColor.White);
 
             try {
                 var packageDefinition = Path.Combine(Context.ContentDirectory, "PhotonTasks", "PhotonTasks.json");
@@ -60,7 +60,7 @@ namespace PhotonTasks
                 await projectPackages.Publish(packageDefinition, packageVersion, token);
             }
             catch (Exception error) {
-                Context.Output.AppendLine($"Failed to create Project Package! {error.UnfoldMessages()}", ConsoleColor.DarkYellow);
+                Context.Output.WriteLine($"Failed to create Project Package! {error.UnfoldMessages()}", ConsoleColor.DarkYellow);
                 throw;
             }
         }

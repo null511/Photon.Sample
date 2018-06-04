@@ -2,6 +2,7 @@
 using Photon.Framework.Extensions;
 using Photon.Framework.Packages;
 using Photon.Framework.Tasks;
+using PhotonTasks.Internal;
 using System;
 using System.IO;
 using System.Threading;
@@ -17,9 +18,9 @@ namespace PhotonTasks.DeployTasks
 
         public async Task RunAsync(CancellationToken token)
         {
-            Context.Output.Append("Unpackaging ", ConsoleColor.DarkCyan)
-                .Append(Configuration.Apps.Service.AppName, ConsoleColor.Cyan)
-                .AppendLine("...", ConsoleColor.DarkCyan);
+            Context.Output.Write("Unpackaging ", ConsoleColor.DarkCyan)
+                .Write(Configuration.Apps.Service.AppName, ConsoleColor.Cyan)
+                .WriteLine("...", ConsoleColor.DarkCyan);
 
             // Get the versioned application path
             var applicationPath = Context.GetApplicationDirectory(Configuration.Apps.Service.AppName, Context.ProjectPackageVersion);
@@ -33,15 +34,15 @@ namespace PhotonTasks.DeployTasks
                 // Unpackage contents to application path
                 await ApplicationPackageTools.UnpackAsync(packageFilename, applicationPath);
 
-                Context.Output.Append("Unpackaged ", ConsoleColor.DarkGreen)
-                    .Append(Configuration.Apps.Service.AppName, ConsoleColor.Green)
-                    .AppendLine("successfully.", ConsoleColor.DarkGreen);
+                Context.Output.Write("Unpackaged ", ConsoleColor.DarkGreen)
+                    .Write(Configuration.Apps.Service.AppName, ConsoleColor.Green)
+                    .WriteLine("successfully.", ConsoleColor.DarkGreen);
             }
             catch (Exception error) {
-                Context.Output.Append("Failed to unpackage ", ConsoleColor.DarkCyan)
-                    .Append(Configuration.Apps.Service.AppName, ConsoleColor.Cyan)
-                    .AppendLine("! ", ConsoleColor.DarkCyan)
-                    .AppendLine(error.UnfoldMessages(), ConsoleColor.DarkYellow);
+                Context.Output.Write("Failed to unpackage ", ConsoleColor.DarkCyan)
+                    .Write(Configuration.Apps.Service.AppName, ConsoleColor.Cyan)
+                    .WriteLine("! ", ConsoleColor.DarkCyan)
+                    .WriteLine(error.UnfoldMessages(), ConsoleColor.DarkYellow);
 
                 throw;
             }

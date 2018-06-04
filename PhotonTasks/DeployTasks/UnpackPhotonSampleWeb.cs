@@ -1,6 +1,7 @@
 ﻿using Photon.Framework.Agent;
 using Photon.Framework.Packages;
 using Photon.Framework.Tasks;
+using PhotonTasks.Internal;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
