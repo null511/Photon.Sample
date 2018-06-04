@@ -34,10 +34,13 @@ namespace PhotonTasks
                 "/p:WebPublishMethod=FileSystem");
 
             packageVersion = Context.BuildNumber.ToString();
-            appPackages = new ApplicationPackageUtility(Context);
+            var packagePath = Path.Combine(Context.BinDirectory, "Packages");
+            appPackages = new ApplicationPackageUtility(Context) {
+                PackageDirectory = packagePath,
+            };
 
             projectPackages = new ProjectPackageUtility(Context) {
-                PackageDirectory = Context.BinDirectory,
+                PackageDirectory = packagePath,
             };
 
             await Task.WhenAll(
