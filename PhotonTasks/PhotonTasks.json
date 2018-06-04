@@ -3,7 +3,7 @@
 	"name": "Photon Sample Tasks",
 	"description": "Sample Project Package for Photon deployments.",
 	"assembly": "PhotonTasks.dll",
-	"script": "DeployScript",
+	"script": "Deploy",
 	"files": [
 		{
 			"path": "bin\\Debug\\**",
