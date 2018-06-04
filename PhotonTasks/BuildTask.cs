@@ -12,6 +12,8 @@ namespace PhotonTasks
     public class BuildTask : IBuildTask
     {
         private string packageVersion;
+        private ApplicationPackageUtility appPackages;
+        private ProjectPackageUtility projectPackages;
 
         public IAgentBuildContext Context {get; set;}
 
@@ -32,6 +34,11 @@ namespace PhotonTasks
                 "/p:WebPublishMethod=FileSystem");
 
             packageVersion = Context.BuildNumber.ToString();
+            appPackages = new ApplicationPackageUtility(Context);
+
+            projectPackages = new ProjectPackageUtility(Context) {
+                PackageDirectory = Context.BinDirectory,
+            };
 
             await Task.WhenAll(
                 CreateProjectPackage(token),
@@ -49,12 +56,8 @@ namespace PhotonTasks
 
             try {
                 var packageDefinition = Path.Combine(Context.ContentDirectory, "PhotonTasks", "PhotonTasks.json");
-                var projectPackageFilename = Path.Combine(Context.BinDirectory, $"photon.sample.tasks.{packageVersion}.zip");
 
-                await ProjectPackageTools.CreatePackage(packageDefinition, packageVersion, projectPackageFilename);
-                await Context.PushProjectPackageAsync(projectPackageFilename, token);
-
-                Context.Output.AppendLine("Created Project Package successfully.", ConsoleColor.DarkGreen);
+                await projectPackages.Publish(packageDefinition, packageVersion, token);
             }
             catch (Exception error) {
                 Context.Output.AppendLine($"Failed to create Project Package! {error.UnfoldMessages()}", ConsoleColor.DarkYellow);
@@ -64,42 +67,16 @@ namespace PhotonTasks
 
         private async Task CreateWebApplicationPackage(CancellationToken token)
         {
-            Context.Output.AppendLine("Creating Web Application Package...", ConsoleColor.White);
+            var packageDefinition = Path.Combine(Context.ContentDirectory, "WebApplication", "WebApplication.json");
 
-            try {
-                //Context.RunCommandLine("bin\\msbuild.cmd \"Photon.Sample.sln\" /t:Rebuild /p:Configuration=\"Release\" /p:Platform=\"Any CPU\" /m");
-
-                var packageDefinition = Path.Combine(Context.ContentDirectory, "WebApplication", "WebApplication.json");
-                var webAppPackageFilename = Path.Combine(Context.BinDirectory, $"photon.sample.web.{packageVersion}.zip");
-
-                await ApplicationPackageTools.CreatePackage(packageDefinition, packageVersion, webAppPackageFilename);
-                await Context.PushApplicationPackageAsync(webAppPackageFilename, token);
-
-                Context.Output.AppendLine("Created Web Application Package successfully.", ConsoleColor.DarkGreen);
-            }
-            catch (Exception error) {
-                Context.Output.AppendLine($"Failed to create Web Application Package! {error.UnfoldMessages()}", ConsoleColor.DarkYellow);
-                throw;
-            }
+            await appPackages.Publish(packageDefinition, packageVersion, token);
         }
 
         private async Task CreateServiceApplicationPackage(CancellationToken token)
         {
-            Context.Output.AppendLine("Creating Service Application Package...", ConsoleColor.White);
+            var packageDefinition = Path.Combine(Context.ContentDirectory, "WindowsService", "WindowsService.json");
 
-            try {
-                var packageDefinition = Path.Combine(Context.ContentDirectory, "WindowsService", "WindowsService.json");
-                var svcAppPackageFilename = Path.Combine(Context.BinDirectory, $"photon.sample.svc.{packageVersion}.zip");
-
-                await ApplicationPackageTools.CreatePackage(packageDefinition, packageVersion, svcAppPackageFilename);
-                await Context.PushApplicationPackageAsync(svcAppPackageFilename, token);
-
-                Context.Output.AppendLine("Created Service Application Package successfully.", ConsoleColor.DarkGreen);
-            }
-            catch (Exception error) {
-                Context.Output.AppendLine($"Failed to create Service Application Package! {error.UnfoldMessages()}", ConsoleColor.DarkYellow);
-                throw;
-            }
+            await appPackages.Publish(packageDefinition, packageVersion, token);
         }
     }
 }

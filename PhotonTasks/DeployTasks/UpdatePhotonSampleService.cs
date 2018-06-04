@@ -17,7 +17,7 @@ namespace PhotonTasks.DeployTasks
             // Get the versioned application path
             var applicationPath = Context.GetApplicationDirectory(Configuration.Apps.Service.AppName, Context.ProjectPackageVersion);
 
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

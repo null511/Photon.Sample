@@ -48,6 +48,8 @@ namespace PhotonTasks.DeployTasks
                     if (site.State == ObjectState.Stopped)
                         site.Start();
                 });
+
+                //iis.WebApplication.Configure();
             }
         }
     }
