@@ -48,9 +48,10 @@ namespace PhotonTasks
                 CreateWebApplicationPackage(token),
                 CreateServiceApplicationPackage(token));
 
-            Context.Output
-                .Write("Build Number: ", ConsoleColor.DarkBlue)
-                .WriteLine(Context.BuildNumber, ConsoleColor.Blue);
+            using (var block = Context.Output.WriteBlock()) {
+                block.Write("Build Number: ", ConsoleColor.DarkBlue);
+                block.WriteLine(Context.BuildNumber, ConsoleColor.Blue);
+            }
         }
 
         private async Task CreateProjectPackage(CancellationToken token)

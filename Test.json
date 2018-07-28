@@ -1,9 +1,0 @@
-{
-	"project": "photon.sample",
-	"assembly": "PhotonTasks\\bin\\Release\\PhotonTasks.dll",
-	"refspec": "master",
-	"task": "TestTask",
-	"roles": [
-		"build"
-	]
-}

@@ -18,9 +18,11 @@ namespace PhotonTasks.DeployTasks
 
         public async Task RunAsync(CancellationToken token)
         {
-            Context.Output.Write("Unpackaging ", ConsoleColor.DarkCyan)
-                .Write(Configuration.Apps.Service.AppName, ConsoleColor.Cyan)
-                .WriteLine("...", ConsoleColor.DarkCyan);
+            using (var block = Context.Output.WriteBlock()) {
+                block.Write("Unpackaging ", ConsoleColor.DarkCyan);
+                block.Write(Configuration.Apps.Service.AppName, ConsoleColor.Cyan);
+                block.WriteLine("...", ConsoleColor.DarkCyan);
+            }
 
             // Get the versioned application path
             var applicationPath = Context.GetApplicationDirectory(Configuration.Apps.Service.AppName, Context.ProjectPackageVersion);
@@ -34,15 +36,19 @@ namespace PhotonTasks.DeployTasks
                 // Unpackage contents to application path
                 await ApplicationPackageTools.UnpackAsync(packageFilename, applicationPath);
 
-                Context.Output.Write("Unpackaged ", ConsoleColor.DarkGreen)
-                    .Write(Configuration.Apps.Service.AppName, ConsoleColor.Green)
-                    .WriteLine("successfully.", ConsoleColor.DarkGreen);
+                using (var block = Context.Output.WriteBlock()) {
+                    block.Write("Unpackaged ", ConsoleColor.DarkGreen);
+                    block.Write(Configuration.Apps.Service.AppName, ConsoleColor.Green);
+                    block.WriteLine("successfully.", ConsoleColor.DarkGreen);
+                }
             }
             catch (Exception error) {
-                Context.Output.Write("Failed to unpackage ", ConsoleColor.DarkCyan)
-                    .Write(Configuration.Apps.Service.AppName, ConsoleColor.Cyan)
-                    .WriteLine("! ", ConsoleColor.DarkCyan)
-                    .WriteLine(error.UnfoldMessages(), ConsoleColor.DarkYellow);
+                using (var block = Context.Output.WriteBlock()) {
+                    block.Write("Failed to unpackage ", ConsoleColor.DarkCyan);
+                    block.Write(Configuration.Apps.Service.AppName, ConsoleColor.Cyan);
+                    block.WriteLine("! ", ConsoleColor.DarkCyan);
+                    block.WriteLine(error.UnfoldMessages(), ConsoleColor.DarkYellow);
+                }
 
                 throw;
             }
