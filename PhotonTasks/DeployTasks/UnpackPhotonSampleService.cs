@@ -1,10 +1,11 @@
 ﻿using Photon.Framework.Agent;
+using Photon.Framework.Applications;
 using Photon.Framework.Extensions;
 using Photon.Framework.Packages;
 using Photon.Framework.Tasks;
+using Photon.Framework.Tools;
 using PhotonTasks.Internal;
 using System;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,7 +26,18 @@ namespace PhotonTasks.DeployTasks
             }
 
             // Get the versioned application path
-            var applicationPath = Context.GetApplicationDirectory(Configuration.Apps.Service.AppName, Context.ProjectPackageVersion);
+            if (!Context.Applications.TryGetApplication(Context.Project.Id, Configuration.Apps.Service.AppName, out var app))
+                app = Context.Applications.RegisterApplication(Context.Project.Id, Configuration.Apps.Service.AppName);
+
+            if (!app.TryGetRevision(Context.DeploymentNumber, out var appRev)) {
+                var rev = new ApplicationRevision {
+                    DeploymentNumber = Context.DeploymentNumber,
+                    PackageId = Configuration.Apps.Service.PackageId,
+                    PackageVersion = Context.ProjectPackageVersion,
+                };
+
+                appRev = app.RegisterRevision(rev);
+            }
 
             string packageFilename = null;
 
@@ -34,7 +46,7 @@ namespace PhotonTasks.DeployTasks
                 packageFilename = await Context.PullApplicationPackageAsync(Configuration.Apps.Service.PackageId, Context.ProjectPackageVersion);
 
                 // Unpackage contents to application path
-                await ApplicationPackageTools.UnpackAsync(packageFilename, applicationPath);
+                await ApplicationPackageTools.UnpackAsync(packageFilename, appRev.Location);
 
                 using (var block = Context.Output.WriteBlock()) {
                     block.Write("Unpackaged ", ConsoleColor.DarkGreen);
@@ -54,8 +66,10 @@ namespace PhotonTasks.DeployTasks
             }
             finally {
                 if (packageFilename != null) {
-                    try {File.Delete(packageFilename);}
-                    catch {}
+                    try {
+                        PathEx.Delete(packageFilename);
+                    }
+                    catch { }
                 }
             }
         }

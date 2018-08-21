@@ -36,11 +36,11 @@
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Photon.Framework, Version=0.0.49.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Photon.Framework.0.0.49\lib\net46\Photon.Framework.dll</HintPath>
+    <Reference Include="Photon.Framework, Version=0.0.53.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Photon.Framework.0.0.53\lib\net46\Photon.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Photon.IIS, Version=0.0.9.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Photon.IIS.0.0.9\lib\net46\Photon.IIS.dll</HintPath>
+    <Reference Include="Photon.IIS, Version=0.0.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Photon.IIS.0.0.12\lib\net46\Photon.IIS.dll</HintPath>
     </Reference>
     <Reference Include="Photon.WindowsServices, Version=0.0.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Photon.WindowsServices.0.0.6\lib\net46\Photon.WindowsServices.dll</HintPath>

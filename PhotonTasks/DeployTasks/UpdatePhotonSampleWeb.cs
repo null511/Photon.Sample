@@ -2,6 +2,7 @@
 using Photon.Framework.Agent;
 using Photon.Framework.Tasks;
 using Photon.Plugins.IIS;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Configuration = PhotonTasks.Internal.Configuration;
@@ -17,10 +18,14 @@ namespace PhotonTasks.DeployTasks
         public async Task RunAsync(CancellationToken token)
         {
             // Get the versioned application path
-            var applicationPath = Context.GetApplicationDirectory(Configuration.Apps.Web.AppName, Context.ProjectPackageVersion);
+            if (!Context.Applications.TryGetApplication(Context.Project.Id, Configuration.Apps.Web.AppName, out var app))
+                throw new ApplicationException($"Application directory not found for app '{Configuration.Apps.Web.AppName}'!");
+
+            if (!app.TryGetRevision(Context.DeploymentNumber, out var appRev))
+                throw new ApplicationException($"Application revision directory not found for app '{Configuration.Apps.Web.AppName}' revision '{Context.DeploymentNumber}'!");
 
             using (var iis = new IISTools(Context)) {
-                iis.ApplicationPool.Configure(Configuration.AppPoolName, pool => {
+                await iis.ApplicationPool.ConfigureAsync(Configuration.AppPoolName, pool => {
                     // Configure AppPool
                     pool.AutoStart = true;
                     pool.ManagedPipelineMode = ManagedPipelineMode.Integrated;
@@ -29,9 +34,9 @@ namespace PhotonTasks.DeployTasks
                     // Start Website
                     if (pool.State == ObjectState.Stopped)
                         pool.Start();
-                });
+                }, token);
 
-                iis.WebSite.Configure("Photon Web", 8086, site => {
+                await iis.WebSite.ConfigureAsync("Photon Web", 8086, site => {
                     // Configure Website
                     site.ApplicationDefaults.ApplicationPoolName = Configuration.AppPoolName;
                     site.ServerAutoStart = true;
@@ -43,14 +48,12 @@ namespace PhotonTasks.DeployTasks
                     // Update Virtual Path
                     site.Applications[0]
                         .VirtualDirectories["/"]
-                        .PhysicalPath = applicationPath;
+                        .PhysicalPath = appRev.Location;
 
                     // Start Website
                     if (site.State == ObjectState.Stopped)
                         site.Start();
-                });
-
-                //iis.WebApplication.Configure();
+                }, token);
             }
         }
     }
