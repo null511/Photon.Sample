@@ -18,11 +18,10 @@ namespace PhotonTasks.DeployTasks
         public async Task RunAsync(CancellationToken token)
         {
             // Get the versioned application path
-            var appRev = await Context.Applications.GetApplicationRevision(
+            var appRev = await Context.GetApplicationRevision(
                 projectId: Context.Project.Id,
                 appName: Configuration.Apps.Web.AppName,
-                deploymentNumber: Context.DeploymentNumber,
-                token: token);
+                deploymentNumber: Context.DeploymentNumber);
 
             if (appRev == null) {
                 var request = new DomainApplicationRevisionRequest {
@@ -33,7 +32,7 @@ namespace PhotonTasks.DeployTasks
                     PackageVersion = Context.ProjectPackageVersion,
                 };
 
-                appRev = await Context.Applications.RegisterApplicationRevision(request, token);
+                appRev = await Context.RegisterApplicationRevision(request);
             }
 
             string packageFilename = null;
