@@ -26,17 +26,22 @@ namespace PhotonTasks.DeployTasks
             }
 
             // Get the versioned application path
-            if (!Context.Applications.TryGetApplication(Context.Project.Id, Configuration.Apps.Service.AppName, out var app))
-                app = Context.Applications.RegisterApplication(Context.Project.Id, Configuration.Apps.Service.AppName);
+            var appRev = await Context.Applications.GetApplicationRevision(
+                projectId: Context.Project.Id,
+                appName: Configuration.Apps.Web.AppName,
+                deploymentNumber: Context.DeploymentNumber,
+                token: token);
 
-            if (!app.TryGetRevision(Context.DeploymentNumber, out var appRev)) {
-                var rev = new ApplicationRevision {
+            if (appRev == null) {
+                var request = new DomainApplicationRevisionRequest {
+                    ProjectId = Context.Project.Id,
+                    ApplicationName = Configuration.Apps.Web.AppName,
                     DeploymentNumber = Context.DeploymentNumber,
-                    PackageId = Configuration.Apps.Service.PackageId,
+                    PackageId = Configuration.Apps.Web.PackageId,
                     PackageVersion = Context.ProjectPackageVersion,
                 };
 
-                appRev = app.RegisterRevision(rev);
+                appRev = await Context.Applications.RegisterApplicationRevision(request, token);
             }
 
             string packageFilename = null;
@@ -46,7 +51,7 @@ namespace PhotonTasks.DeployTasks
                 packageFilename = await Context.PullApplicationPackageAsync(Configuration.Apps.Service.PackageId, Context.ProjectPackageVersion);
 
                 // Unpackage contents to application path
-                await ApplicationPackageTools.UnpackAsync(packageFilename, appRev.Location);
+                await ApplicationPackageTools.UnpackAsync(packageFilename, appRev.ApplicationPath);
 
                 using (var block = Context.Output.WriteBlock()) {
                     block.Write("Unpackaged ", ConsoleColor.DarkGreen);

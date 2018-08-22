@@ -16,11 +16,13 @@ namespace PhotonTasks.DeployTasks
         public async Task RunAsync(CancellationToken token)
         {
             // Get the versioned application path
-            if (!Context.Applications.TryGetApplication(Context.Project.Id, Configuration.Apps.Service.AppName, out var app))
-                throw new ApplicationException($"Application directory not found for app '{Configuration.Apps.Service.AppName}'!");
+            var appRev = await Context.Applications.GetApplicationRevision(
+                projectId: Context.Project.Id,
+                appName: Configuration.Apps.Web.AppName,
+                deploymentNumber: Context.DeploymentNumber,
+                token: token);
 
-            if (!app.TryGetRevision(Context.DeploymentNumber, out var appRev))
-                throw new ApplicationException($"Application revision directory not found for app '{Configuration.Apps.Service.AppName}' revision '{Context.DeploymentNumber}'!");
+            if (appRev == null) throw new ApplicationException($"Application revision directory not found for app '{Configuration.Apps.Web.AppName}' revision '{Context.DeploymentNumber}'!");
 
             // TODO
         }
