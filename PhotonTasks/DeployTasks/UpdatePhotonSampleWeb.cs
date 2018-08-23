@@ -18,7 +18,7 @@ namespace PhotonTasks.DeployTasks
         public async Task RunAsync(CancellationToken token)
         {
             // Get the versioned application path
-            var appRev = await Context.GetApplicationRevision(
+            var appRev = await Context.Applications.GetApplicationRevision(
                 projectId: Context.Project.Id,
                 appName: Configuration.Apps.Web.AppName,
                 deploymentNumber: Context.DeploymentNumber);

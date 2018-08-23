@@ -18,7 +18,7 @@ namespace PhotonTasks.DeployTasks
         public async Task RunAsync(CancellationToken token)
         {
             // Get the versioned application path
-            var appRev = await Context.GetApplicationRevision(
+            var appRev = await Context.Applications.GetApplicationRevision(
                 projectId: Context.Project.Id,
                 appName: Configuration.Apps.Web.AppName,
                 deploymentNumber: Context.DeploymentNumber);
@@ -32,13 +32,13 @@ namespace PhotonTasks.DeployTasks
                     PackageVersion = Context.ProjectPackageVersion,
                 };
 
-                appRev = await Context.RegisterApplicationRevision(request);
+                appRev = await Context.Applications.RegisterApplicationRevision(request);
             }
 
             string packageFilename = null;
             try {
                 // Download Package to temp file
-                packageFilename = await Context.PullApplicationPackageAsync(Configuration.Apps.Web.PackageId, Context.ProjectPackageVersion);
+                packageFilename = await Context.Packages.PullApplicationPackageAsync(Configuration.Apps.Web.PackageId, Context.ProjectPackageVersion);
 
                 // Unpackage contents to application path
                 await ApplicationPackageTools.UnpackAsync(packageFilename, appRev.ApplicationPath);
