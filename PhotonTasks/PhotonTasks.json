@@ -2,6 +2,7 @@
 	"id": "photon.sample.tasks",
 	"name": "Photon Sample Tasks",
 	"description": "Sample Project Package for Photon deployments.",
+	"project": "sample",
 	"assembly": "PhotonTasks.dll",
 	"script": "Deploy",
 	"files": [
