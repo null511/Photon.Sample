@@ -26,10 +26,10 @@ namespace PhotonTasks.DeployTasks
 
             // Get the versioned application path
             var appRev = await Context.Applications.GetApplicationRevision(
-                appName: Configuration.Apps.Web.AppName)
+                appName: Configuration.Apps.Service.AppName)
             ?? await Context.Applications.RegisterApplicationRevision(
-                appName: Configuration.Apps.Web.AppName,
-                packageId: Configuration.Apps.Web.PackageId,
+                appName: Configuration.Apps.Service.AppName,
+                packageId: Configuration.Apps.Service.PackageId,
                 packageVersion: Context.ProjectPackageVersion);
 
             string packageFilename = null;
