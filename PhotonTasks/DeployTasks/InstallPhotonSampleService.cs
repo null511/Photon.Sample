@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace PhotonTasks.DeployTasks
 {
     [Roles(Configuration.Roles.Deploy.Web)]
-    internal class UpdatePhotonSampleService : IDeployTask
+    internal class InstallPhotonSampleService : IDeployTask
     {
         public IAgentDeployContext Context {get; set;}
 
@@ -16,10 +16,7 @@ namespace PhotonTasks.DeployTasks
         public async Task RunAsync(CancellationToken token)
         {
             // Get the versioned application path
-            var appRev = await Context.Applications.GetApplicationRevision(
-                projectId: Context.Project.Id,
-                appName: Configuration.Apps.Web.AppName,
-                deploymentNumber: Context.DeploymentNumber);
+            var appRev = await Context.Applications.GetApplicationRevision(Configuration.Apps.Web.AppName);
 
             if (appRev == null) throw new ApplicationException($"Application revision directory not found for app '{Configuration.Apps.Web.AppName}' revision '{Context.DeploymentNumber}'!");
 

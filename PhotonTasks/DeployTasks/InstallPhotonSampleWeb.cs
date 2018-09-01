@@ -10,7 +10,7 @@ using Configuration = PhotonTasks.Internal.Configuration;
 namespace PhotonTasks.DeployTasks
 {
     [Roles(Configuration.Roles.Deploy.Web)]
-    internal class UpdatePhotonSampleWeb : IDeployTask
+    internal class InstallPhotonSampleWeb : IDeployTask
     {
         public IAgentDeployContext Context {get; set;}
 
@@ -18,23 +18,19 @@ namespace PhotonTasks.DeployTasks
         public async Task RunAsync(CancellationToken token)
         {
             // Get the versioned application path
-            var appRev = await Context.Applications.GetApplicationRevision(
-                projectId: Context.Project.Id,
-                appName: Configuration.Apps.Web.AppName,
-                deploymentNumber: Context.DeploymentNumber);
+            var appRev = await Context.Applications.GetApplicationRevision(Configuration.Apps.Web.AppName);
 
             if (appRev == null) throw new ApplicationException($"Application revision directory not found for app '{Configuration.Apps.Web.AppName}' revision '{Context.DeploymentNumber}'!");
 
             using (var iis = new IISTools(Context)) {
                 await iis.ApplicationPool.ConfigureAsync(Configuration.AppPoolName, pool => {
                     // Configure AppPool
-                    pool.AutoStart = true;
                     pool.ManagedPipelineMode = ManagedPipelineMode.Integrated;
                     pool.ManagedRuntimeVersion = "v4.0";
+                    pool.AutoStart = true;
 
                     // Start Website
-                    if (pool.State == ObjectState.Stopped)
-                        pool.Start();
+                    if (pool.State == ObjectState.Stopped) pool.Start();
                 }, token);
 
                 await iis.WebSite.ConfigureAsync("Photon Web", 8086, site => {
@@ -52,8 +48,7 @@ namespace PhotonTasks.DeployTasks
                         .PhysicalPath = appRev.ApplicationPath;
 
                     // Start Website
-                    if (site.State == ObjectState.Stopped)
-                        site.Start();
+                    if (site.State == ObjectState.Stopped) site.Start();
                 }, token);
             }
         }

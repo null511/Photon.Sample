@@ -1,5 +1,4 @@
 ﻿using Photon.Framework.Agent;
-using Photon.Framework.Applications;
 using Photon.Framework.Extensions;
 using Photon.Framework.Packages;
 using Photon.Framework.Tasks;
@@ -27,27 +26,19 @@ namespace PhotonTasks.DeployTasks
 
             // Get the versioned application path
             var appRev = await Context.Applications.GetApplicationRevision(
-                projectId: Context.Project.Id,
+                appName: Configuration.Apps.Web.AppName)
+            ?? await Context.Applications.RegisterApplicationRevision(
                 appName: Configuration.Apps.Web.AppName,
-                deploymentNumber: Context.DeploymentNumber);
-
-            if (appRev == null) {
-                var request = new DomainApplicationRevisionRequest {
-                    ProjectId = Context.Project.Id,
-                    ApplicationName = Configuration.Apps.Web.AppName,
-                    DeploymentNumber = Context.DeploymentNumber,
-                    PackageId = Configuration.Apps.Web.PackageId,
-                    PackageVersion = Context.ProjectPackageVersion,
-                };
-
-                appRev = await Context.Applications.RegisterApplicationRevision(request);
-            }
+                packageId: Configuration.Apps.Web.PackageId,
+                packageVersion: Context.ProjectPackageVersion);
 
             string packageFilename = null;
 
             try {
                 // Download Package to temp file
-                packageFilename = await Context.Packages.PullApplicationPackageAsync(Configuration.Apps.Service.PackageId, Context.ProjectPackageVersion);
+                packageFilename = await Context.Packages.PullApplicationPackageAsync(
+                    id: Configuration.Apps.Service.PackageId,
+                    version: Context.ProjectPackageVersion);
 
                 // Unpackage contents to application path
                 await ApplicationPackageTools.UnpackAsync(packageFilename, appRev.ApplicationPath);
@@ -69,12 +60,11 @@ namespace PhotonTasks.DeployTasks
                 throw;
             }
             finally {
-                if (packageFilename != null) {
-                    try {
+                try {
+                    if (packageFilename != null)
                         PathEx.Delete(packageFilename);
-                    }
-                    catch { }
                 }
+                catch { }
             }
         }
     }

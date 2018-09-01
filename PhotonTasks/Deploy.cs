@@ -27,8 +27,8 @@ namespace PhotonTasks
 
                 // Update Applications
                 await agents.RunTasksAsync(
-                    nameof(UpdatePhotonSampleWeb),
-                    nameof(UpdatePhotonSampleService));
+                    nameof(InstallPhotonSampleWeb),
+                    nameof(InstallPhotonSampleService));
             }
             finally {
                 await agents.ReleaseAllAsync(token);
