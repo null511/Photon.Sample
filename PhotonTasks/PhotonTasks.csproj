@@ -42,6 +42,9 @@
     <Reference Include="Photon.IIS, Version=0.0.12.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Photon.IIS.0.0.12\lib\net46\Photon.IIS.dll</HintPath>
     </Reference>
+    <Reference Include="Photon.MSBuild, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Photon.MSBuild.0.0.1\lib\net46\Photon.MSBuild.dll</HintPath>
+    </Reference>
     <Reference Include="Photon.WindowsServices, Version=0.0.7.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Photon.WindowsServices.0.0.7\lib\net46\Photon.WindowsServices.dll</HintPath>
     </Reference>

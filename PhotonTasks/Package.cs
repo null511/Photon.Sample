@@ -2,6 +2,7 @@
 using Photon.Framework.Extensions;
 using Photon.Framework.Packages;
 using Photon.Framework.Tasks;
+using Photon.MSBuild;
 using System;
 using System.IO;
 using System.Threading;
@@ -22,16 +23,35 @@ namespace PhotonTasks
         {
             Context.Output.WriteLine("Building Solution...", ConsoleColor.White);
 
-            Context.RunCommandLine(".\\bin\\msbuild.cmd", "/m", "/v:m",
-                "\"Photon.Sample.sln\"",
-                "/t:Rebuild",
-                "/p:Configuration=\"Debug\"",
-                "/p:Platform=\"Any CPU\"",
-                "/p:DeployOnBuild=true",
-                "/p:publishUrl=\"Publish\"",
-                "/p:DeployDefaultTarget=WebPublish",
-                "/p:DeleteExistingFiles=True",
-                "/p:WebPublishMethod=FileSystem");
+            var buildArgs = new MSBuildArguments {
+                ProjectFile = "Photon.Sample.sln",
+                Targets = {"Rebuild"},
+                Properties = {
+                    ["Configuration"] = "Debug",
+                    ["Platform"] = "Any CPU",
+                    ["DeployOnBuild"] = "True",
+                    ["PublishUrl"] = "Publish",
+                    ["DeployDefaultTarget"] = "WebPublish",
+                    ["DeleteExistingFiles"] = "True",
+                    ["WebPublishMethod"] = "FileSystem",
+                },
+                Verbosity = MSBuildVerbosityLevel.Minimal,
+                MaxCpuCount = 0,
+            };
+
+            var msbuild = new MSBuildCommand(Context);
+            await msbuild.RunAsync(buildArgs, token);
+
+            //Context.RunCommandLine(".\\bin\\msbuild.cmd", "/m", "/v:m",
+            //    "\"Photon.Sample.sln\"",
+            //    "/t:Rebuild",
+            //    "/p:Configuration=\"Debug\"",
+            //    "/p:Platform=\"Any CPU\"",
+            //    "/p:DeployOnBuild=true",
+            //    "/p:publishUrl=\"Publish\"",
+            //    "/p:DeployDefaultTarget=WebPublish",
+            //    "/p:DeleteExistingFiles=True",
+            //    "/p:WebPublishMethod=FileSystem");
 
             packageVersion = Context.BuildNumber.ToString();
             var packagePath = Path.Combine(Context.BinDirectory, "Packages");
