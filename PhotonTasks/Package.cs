@@ -23,6 +23,10 @@ namespace PhotonTasks
         {
             Context.Output.WriteLine("Building Solution...", ConsoleColor.White);
 
+            var msbuild = new MSBuildCommand(Context) {
+                Exe = ".\\bin\\msbuild.cmd",
+            };
+
             var buildArgs = new MSBuildArguments {
                 ProjectFile = "Photon.Sample.sln",
                 Targets = {"Rebuild"},
@@ -36,10 +40,9 @@ namespace PhotonTasks
                     ["WebPublishMethod"] = "FileSystem",
                 },
                 Verbosity = MSBuildVerbosityLevel.Minimal,
-                MaxCpuCount = 0,
+                // TODO MaxCpuCount = 0,
             };
 
-            var msbuild = new MSBuildCommand(Context);
             await msbuild.RunAsync(buildArgs, token);
 
             //Context.RunCommandLine(".\\bin\\msbuild.cmd", "/m", "/v:m",
