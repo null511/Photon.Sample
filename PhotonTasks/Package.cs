@@ -25,6 +25,7 @@ namespace PhotonTasks
 
             var msbuild = new MSBuildCommand(Context) {
                 Exe = ".\\bin\\msbuild.cmd",
+                WorkingDirectory = Context.ContentDirectory,
             };
 
             var buildArgs = new MSBuildArguments {
@@ -40,21 +41,10 @@ namespace PhotonTasks
                     ["WebPublishMethod"] = "FileSystem",
                 },
                 Verbosity = MSBuildVerbosityLevel.Minimal,
-                // TODO MaxCpuCount = 0,
+                MaxCpuCount = 0,
             };
 
             await msbuild.RunAsync(buildArgs, token);
-
-            //Context.RunCommandLine(".\\bin\\msbuild.cmd", "/m", "/v:m",
-            //    "\"Photon.Sample.sln\"",
-            //    "/t:Rebuild",
-            //    "/p:Configuration=\"Debug\"",
-            //    "/p:Platform=\"Any CPU\"",
-            //    "/p:DeployOnBuild=true",
-            //    "/p:publishUrl=\"Publish\"",
-            //    "/p:DeployDefaultTarget=WebPublish",
-            //    "/p:DeleteExistingFiles=True",
-            //    "/p:WebPublishMethod=FileSystem");
 
             packageVersion = Context.BuildNumber.ToString();
             var packagePath = Path.Combine(Context.BinDirectory, "Packages");
