@@ -40,7 +40,11 @@ namespace PhotonTasks
                     ["DeleteExistingFiles"] = "True",
                     ["WebPublishMethod"] = "FileSystem",
                 },
-                Verbosity = MSBuildVerbosityLevel.Minimal,
+                Logger = {
+                    ConsoleLoggerParameters = MSBuildConsoleLoggerParameters.ErrorsOnly
+                        | MSBuildConsoleLoggerParameters.Summary,
+                },
+                Verbosity = MSBuildVerbosityLevels.Minimal,
                 MaxCpuCount = 0,
             };
 
